@@ -1,18 +1,19 @@
 const replace = require('gulp-replace');
-const { src } = require('gulp');
-const fs = require('fs');
+const { src, dest } = require('gulp');
 
 function migrate() {
   let dataAttrChanged = 0;
   let CDNLinksChanged = 0;
   let cssClassChanged = 0;
 
-  // Hey Developer!  Change your_directory to the path you want to work on!
+  // Hey Developer!  Change directory to the path you want to work on!
+  // The script has been modified to act directly on the files in the directory!
+  // Make sure you have a backup of your files before running this script!  (Or use a version control system like Git!)
 
-  const directory = 'your_directory/*.{asp,hbs,html,htm,php,vue,cshtml}';
+  const directory = 'C:/Users/jlilly/source/repos/Upstream/';
 
   return (
-    src(directory, { base: './' })
+    src(`${directory}**/*.{asp,hbs,html,htm,php,vue,cshtml}`, { base: directory })
       // CDNJS CSS
       .pipe(
         replace(
@@ -673,8 +674,8 @@ function migrate() {
       .pipe(replace(/<select([^>]*)\bclass=['"]([^'"]*)form-control(-lg|-sm)?([^'"]*)['"]([^>]*)>/g, '<select$1class="$2form-select$3$4"$5>'))
       .pipe(replace(/<select([^>]*)\bclass=['"]([^'"]*)form-control\b([^'"]*['"])/g, '<select$1class="$2form-select$3'))
       .pipe(replace('<span aria-hidden="true">&times;</span>', ''))
-      // Write changes to the same files, overwriting them
-      .pipe(src.pipe(fs.createWriteStream(directory)))
+      // Overwrite the source files
+      .pipe(dest(directory))
       .on('end', function () {
         console.log(`Completed! Changed ${cssClassChanged} CSS class names, ${dataAttrChanged} data-attributes and ${CDNLinksChanged} CDN links.`);
       })
