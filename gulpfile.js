@@ -1,7 +1,6 @@
 const replace = require('gulp-replace');
 const { src, dest } = require('gulp');
-
-process.env.GULP_ENCODING = 'utf8';
+var header = require('gulp-header');
 
 function migrate() {
   let dataAttrChanged = 0;
@@ -676,6 +675,8 @@ function migrate() {
       .pipe(replace(/<select([^>]*)\bclass=['"]([^'"]*)form-control(-lg|-sm)?([^'"]*)['"]([^>]*)>/g, '<select$1class="$2form-select$3$4"$5>'))
       .pipe(replace(/<select([^>]*)\bclass=['"]([^'"]*)form-control\b([^'"]*['"])/g, '<select$1class="$2form-select$3'))
       .pipe(replace('<span aria-hidden="true">&times;</span>', ''))
+      // Add UTF-8 BOM (Byte Order Mark)
+      .pipe(header('\ufeff'))
       // Overwrite the source files
       .pipe(dest(directory))
       .on('end', function () {
