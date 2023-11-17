@@ -1,6 +1,8 @@
 const replace = require('gulp-replace');
 const { src, dest } = require('gulp');
 
+process.env.GULP_ENCODING = 'utf8';
+
 function migrate() {
   let dataAttrChanged = 0;
   let CDNLinksChanged = 0;
@@ -10,7 +12,7 @@ function migrate() {
   // The script has been modified to act directly on the files in the directory!
   // Make sure you have a backup of your files before running this script!  (Or use a version control system like Git!)
 
-  const directory = 'C:/Users/jlilly/source/repos/Upstream/';
+  const directory = 'C:/Users/jlilly/source/repos/DocGen/';
 
   return (
     src(`${directory}**/*.{asp,hbs,html,htm,php,vue,cshtml}`, { base: directory })
