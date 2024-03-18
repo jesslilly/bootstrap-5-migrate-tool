@@ -11,10 +11,10 @@ function migrate() {
   // The script has been modified to act directly on the files in the directory!
   // Make sure you have a backup of your files before running this script!  (Or use a version control system like Git!)
 
-  const directory = 'C:/Users/jlilly/source/repos/DocGen/';
+  const directory = 'C:/Users/jlilly/source/repos/ContractorPortal/';
 
   return (
-    src(`${directory}**/*.{asp,hbs,html,htm,php,vue,cshtml}`, { base: directory })
+    src(`${directory}**/*.{asp,hbs,html,htm,php,vue,cshtml,js,css}`, { base: directory })
       // CDNJS CSS
       .pipe(
         replace(
@@ -104,7 +104,7 @@ function migrate() {
       )
       .pipe(
         replace(
-          /\sdata-(animation|autohide|boundary|container|content|custom-class|delay|dismiss|display|html|interval|keyboard|method|offset|pause|placement|popper-config|reference|ride|selector|slide(-to)?|target|template|title|toggle|touch|trigger|wrap)=/g,
+          /\sdata-(animation|autohide|backdrop|boundary|container|content|custom-class|delay|dismiss|display|html|interval|keyboard|method|offset|pause|placement|popper-config|reference|ride|selector|slide(-to)?|target|template|title|toggle|touch|trigger|wrap)=/g,
           function (match, p1) {
             if (p1 === 'toggle' && match.includes('data-bs-toggle="')) {
               return match;
